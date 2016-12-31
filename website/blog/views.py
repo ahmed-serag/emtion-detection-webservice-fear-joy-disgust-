@@ -1,17 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from sentence import sentence
-from nltk.corpus import stopwords
+
+
 from keras.models import load_model
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.utils.np_utils import to_categorical
 import numpy
 from cProfile import run
-
-
-# Create your views here.
-
+from sentence import sentence
+from nltk.corpus import stopwords
 
 def stop_words_remove(text):
         cachedStopWords = stopwords.words("english")
@@ -24,20 +22,22 @@ run = 0
 def getemoj(request):
    
     global run
-    model = load_model('my_model.h5')
   
     run = run + 1 
     text = request.GET['sentence']
     line = stop_words_remove(text)
     sent = sentence(line,'NONE')
     sent.init_sent_vector()
+
+
+    X = numpy.asarray([sent.get_sentence_vector()])   
     
-    X = numpy.asarray([sent.get_sentence_vector()])
-        
+    getemoj.model = load_model('my_model.h5')
     
-    predictions = model.predict(X)
+    predictions = getemoj.model.predict(X)
+     
     
-    feels = predictions.tolist()
+    feels =predictions.tolist()
 
     f = feels[0]
     ind = f.index(max(f))
@@ -51,5 +51,13 @@ def getemoj(request):
     
    
     return HttpResponse(response)
+
+
+
+
+
+# Create your views here.
+
+
 
 

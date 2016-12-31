@@ -30,7 +30,13 @@ def init_lexicon_dictionary():
 class sentence:
     '''
     classdocs
-    ''' 
+    '''
+ 
+ 
+
+
+
+
     lexicon_dictionary, lexicon_stemmed_dictionary = init_lexicon_dictionary()
     length = 16
     bayz=0

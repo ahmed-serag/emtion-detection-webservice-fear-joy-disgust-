@@ -15,8 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+
 from blog.views import getemoj
+
+
+
 urlpatterns = [
     url(r'^getemoj', getemoj, name='getemoj'),
     url(r'^admin/', admin.site.urls),
 ]
+
+
